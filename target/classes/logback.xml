@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+
+    <include resource="logback-generic.xml"/>
+
+    <appender name="FILE-ROLLING-CUSTOM" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/custom.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/archived/app-route.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <totalSizeCap>2GB</totalSizeCap>
+            <!-- days to keep -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{ISO8601} %level %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="nl.terrax.camel.route"
+            level="INFO"
+            additivity="false">
+        <appender-ref
+                ref="FILE-ROLLING-CUSTOM"/>
+    </logger>
+
+
+</configuration>
